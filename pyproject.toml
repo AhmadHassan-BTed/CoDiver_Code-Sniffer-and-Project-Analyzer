@@ -28,5 +28,5 @@ dependencies = [
 "Bug Tracker" = "https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator/issues"
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+where = ["src"]
+include = ["software_metrics*"]

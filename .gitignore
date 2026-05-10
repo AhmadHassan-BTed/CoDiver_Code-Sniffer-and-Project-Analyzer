@@ -1,27 +1,28 @@
-# Python
+# Python artifacts
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.ipynb_checkpoints
 
-# Environments
-.env
-.venv
-env/
+# Virtual Environments
+.venv/
 venv/
-ENV/
+env/
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
 
 # IDEs
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 
-# Project Specific
-data/*.db
-data/*.db-journal
+# Databases and temporary files
 *.db
 *.db-journal
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/

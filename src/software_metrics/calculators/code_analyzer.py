@@ -1,6 +1,6 @@
 import ast
 from typing import Optional
-from ..core.models import CodeMetrics
+from software_metrics.core.models import CodeMetrics
 
 def calculate_cognitive_complexity(node, complexity=0, nesting=0):
     if isinstance(node, (ast.If, ast.While, ast.For)):

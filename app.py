@@ -1,9 +1,10 @@
 import sys
 from pathlib import Path
 
-sys.path.append(str(Path(__file__).parent))
+# Add src to sys.path to allow importing the internal package
+sys.path.append(str(Path(__file__).parent / "src"))
 
-from src.ui.dashboard import run_app
+from software_metrics.ui.dashboard import run_app
 
 if __name__ == "__main__":
     run_app()

@@ -1,17 +1,17 @@
 import streamlit as st
 import pandas as pd
 import json
-from .components.sidebar import render_sidebar
-from .components.charts import (
+from software_metrics.ui.components.sidebar import render_sidebar
+from software_metrics.ui.components.charts import (
     render_loc_distribution, 
     render_complexity_scatter, 
     render_quality_bar,
     render_agile_charts
 )
-from .components.metrics_cards import render_summary_metrics, render_recommendations
-from ..calculators.code_analyzer import analyze_python_file
-from ..calculators.estimation import calculate_cocomo
-from ..calculators.agile import analyze_agile_metrics
+from software_metrics.ui.components.metrics_cards import render_summary_metrics, render_recommendations
+from software_metrics.calculators.code_analyzer import analyze_python_file
+from software_metrics.calculators.estimation import calculate_cocomo
+from software_metrics.calculators.agile import analyze_agile_metrics
 
 def run_app():
     st.set_page_config(
