@@ -1,5 +1,5 @@
 name: Bug Report
-description: File a report to help us improve
+description: A report may be filed to help with improvement
 labels: ["bug"]
 body:
   - type: markdown
@@ -10,15 +10,15 @@ body:
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us what you expected to happen
+      description: Also tell what you expected to happen
       placeholder: Tell us what you see!
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: How can we reproduce it?
-      description: Please provide a minimal code sample or steps to reproduce
+      label: How can it be reproduced?
+      description: A minimal code sample or steps to reproduce should be provided.
       placeholder: |
         1. Go to '...'
         2. Click on '....'

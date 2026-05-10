@@ -23,19 +23,20 @@ Software Metrics Calculator is an engineering-focused tool designed to provide a
 
 ## ✨ Core Features
 
-| Feature | Description |
-| :--- | :--- |
-| **AST Analysis** | Static code analysis for Cyclomatic and Cognitive complexity. |
-| **Agile Tracking** | Automated Velocity and Scope Creep metrics from sprint data. |
-| **Project Estimation** | COCOMO-based effort, duration, and staffing predictions. |
-| **Refactoring Engine** | Logic-based recommendations for high-complexity modules. |
-| **Visual Dashboard** | Interactive Plotly-based visualizations for data distribution. |
+| Feature                | Description                                                    |
+| :--------------------- | :------------------------------------------------------------- |
+| **AST Analysis**       | Static code analysis for Cyclomatic and Cognitive complexity.  |
+| **Agile Tracking**     | Automated Velocity and Scope Creep metrics from sprint data.   |
+| **Project Estimation** | COCOMO-based effort, duration, and staffing predictions.       |
+| **Refactoring Engine** | Logic-based recommendations for high-complexity modules.       |
+| **Visual Dashboard**   | Interactive Plotly-based visualizations for data distribution. |
 
 ---
 
 ## 🏗️ Architecture & System Flow
 
 ### Internal Module Structure
+
 The system is divided into a clean separation of UI and calculation logic.
 
 ```mermaid
@@ -43,14 +44,14 @@ graph TD
     subgraph "Frontend Layer"
         UI[app.py - Streamlit]
     end
-    
+
     subgraph "Core Engine (src/)"
         MC[metrics_calculator.py]
         AST[AST Parser]
         COCOMO[COCOMO Model]
         Agile[Agile Processor]
     end
-    
+
     subgraph "Data & Docs"
         DATA[(data/)]
         DOCS[docs/]
@@ -66,6 +67,7 @@ graph TD
 ```
 
 ### Data Processing Workflow
+
 How the system processes an uploaded Python file:
 
 ```mermaid
@@ -74,7 +76,7 @@ sequenceDiagram
     participant Streamlit
     participant Engine
     participant AST
-    
+
     User->>Streamlit: Upload .py file
     Streamlit->>Engine: analyze_python_file(content)
     Engine->>AST: ast.parse()
@@ -107,6 +109,7 @@ Software-Metrics-Calculator/
 ## 🚀 Getting Started
 
 ### Quick Start
+
 ```bash
 # Clone the repository
 git clone https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator.git
@@ -122,6 +125,7 @@ streamlit run app.py
 <summary><b>🛠️ Advanced Installation (Virtual Env)</b></summary>
 
 1. **Initialize Environment**
+
    ```bash
    python -m venv venv
    source venv/bin/activate  # Windows: venv\Scripts\activate
@@ -133,7 +137,7 @@ streamlit run app.py
    pip install pre-commit
    pre-commit install
    ```
-</details>
+   </details>
 
 ---
 
@@ -149,7 +153,7 @@ The application processes data through three distinct pipelines:
 
 ## 🤝 Development & Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions from the community are welcomed! The following steps should be followed:
 
 1. **Fork** the repository.
 2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`).
