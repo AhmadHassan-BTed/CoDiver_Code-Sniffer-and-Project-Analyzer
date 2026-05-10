@@ -1,18 +1,6 @@
 import ast
-import pandas as pd
-from dataclasses import dataclass
-from typing import Dict, List, Optional
-import numpy as np
-
-@dataclass
-class CodeMetrics:
-    lines_of_code: int
-    functions: int
-    classes: int
-    cyclomatic_complexity: int
-    cognitive_complexity: int
-    function_points: float
-    defect_density: float
+from typing import Optional
+from ..core.models import CodeMetrics
 
 def calculate_cognitive_complexity(node, complexity=0, nesting=0):
     if isinstance(node, (ast.If, ast.While, ast.For)):
@@ -62,31 +50,3 @@ def analyze_python_file(file_content: str) -> Optional[CodeMetrics]:
         return metrics
     except Exception:
         return None
-
-def calculate_cocomo(kloc: float) -> Dict[str, float]:
-    if kloc == 0:
-        return {'effort': 0, 'time': 0, 'staff': 0}
-        
-    effort = 2.4 * (kloc ** 1.05)
-    time = 2.5 * (effort ** 0.38)
-    staff = effort / time if time > 0 else 0
-    return {
-        'effort': round(effort, 2),
-        'time': round(time, 2),
-        'staff': round(staff, 2)
-    }
-
-def analyze_agile_metrics(sprint_data: pd.DataFrame) -> Dict[str, float]:
-    if sprint_data.empty:
-        return {}
-
-    velocity = sprint_data['completed_points'].mean() if 'completed_points' in sprint_data.columns else 0
-    
-    planned_sum = sprint_data['planned_points'].sum()
-    scope_creep = ((sprint_data['added_points'].sum() / planned_sum) * 100
-                   if 'added_points' in sprint_data.columns and 'planned_points' in sprint_data.columns and planned_sum > 0 else 0)
-
-    return {
-        'average_velocity': round(velocity, 2),
-        'scope_creep_percentage': round(scope_creep, 2)
-    }

@@ -1,46 +1,35 @@
 # System Architecture
 
-The Software Metrics Calculator is built with a modular architecture that separates data processing from the presentation layer.
+The Software Metrics Calculator is built with a production-grade modular architecture that emphasizes high cohesion and low coupling.
+
+## Directory Structure
+
+- `app.py`: Minimal entry point for the Streamlit application.
+- `src/`:
+    - `core/`: Contains domain models and essential data structures (e.g., `CodeMetrics`).
+    - `calculators/`: contains the core business logic and analysis algorithms.
+        - `code_analyzer.py`: AST-based Python code analysis.
+        - `estimation.py`: COCOMO modeling.
+        - `agile.py`: Agile and sprint metrics processing.
+    - `ui/`: Presentation layer logic.
+        - `dashboard.py`: Main dashboard orchestration.
+        - `components/`: Modular, reusable UI components (sidebar, charts, metrics cards).
+    - `utils/`: Shared utility functions.
 
 ## Core Components
 
-- **Presentation Layer (`app.py`)**: Built with Streamlit, this module manages the interactive dashboard, user file uploads, and state management for visualizations.
-- **Analysis Engine (`src/metrics_calculator.py`)**: The functional heart of the project. It handles static code analysis, agile data aggregation, and estimation modeling.
-- **Schema Layer**: Utilizes Python `dataclasses` to ensure type safety and consistent data structures across the application.
-
-## Metrics Calculation Process
-
-### 1. Code Analysis
-
-The tool uses the built-in `ast` (Abstract Syntax Trees) module to parse Python source code.
-
-- **Cyclomatic Complexity**: Calculated by counting decision points (If, While, For, Assert, etc.) in the AST.
-- **Cognitive Complexity**: Calculated using a custom recursive visitor that accounts for nesting levels.
-- **Function Points**: Estimated based on the number of functions and classes.
-
-### 2. Project Estimation (COCOMO)
-
-Uses the Basic COCOMO model:
-
-- `Effort = 2.4 * (kLOC ^ 1.05)`
-- `Time = 2.5 * (Effort ^ 0.38)`
-
-### 3. Agile Analysis
-
-Parses JSON sprint data to calculate:
-
-- **Velocity**: Mean of completed story points across sprints.
-- **Scope Creep**: Ratio of added points to planned points.
+- **Domain Layer (`src/core`)**: Defines the data contracts used across the system, ensuring type safety and consistency.
+- **Analysis Engine (`src/calculators`)**: Isolated logic for calculating software metrics. This separation allows for testing individual algorithms without UI overhead.
+- **Presentation Layer (`src/ui`)**: Orchestrates the user interface using Streamlit, decoupled from the underlying analysis logic.
 
 ## Data Flow
 
 ```mermaid
-graph LR
-    A[User Uploads Files] --> B[app.py]
-    B --> C[src/metrics_calculator.py]
-    C --> D[AST Parsing]
-    D --> E[Metrics Data]
-    E --> B
-    B --> F[Plotly Visualizations]
-    B --> G[CSV Export]
+graph TD
+    A[User Input] --> B[app.py]
+    B --> C[src/ui/dashboard.py]
+    C --> D[src/ui/components]
+    C --> E[src/calculators]
+    E --> F[src/core/models.py]
+    D --> G[Plotly Visualizations]
 ```
