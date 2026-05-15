@@ -1,174 +1,72 @@
-<div align="center">
+# 🛡️ Omniscient Software Intelligence Suite
 
-# 📊 Software Metrics Calculator
+![Version](https://img.shields.io/badge/version-4.1-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)
 
-[![CI](https://img.shields.io/github/actions/workflow/status/AhmadHassan-BTed/Software-Metrics-Calculator/ci.yml?branch=main&style=for-the-badge&logo=github)](https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit)](https://streamlit.io/)
+**An advanced, open-source unified code quality, architecture metrics, and Agile process analytics platform.**
 
-**A professional dashboard for automated software quality analysis and project estimation.**
-
-[Report Bug](https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator/issues) · [Request Feature](https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator/issues)
-
-</div>
+Developed and engineered by **Ahmad Hassan (B-Ted)**.
 
 ---
 
 ## 📖 Overview
 
-Software Metrics Calculator is an engineering-focused tool designed to provide actionable insights into codebases and project health. It leverages Abstract Syntax Tree (AST) parsing to calculate complexity and standard estimation models like COCOMO to predict development effort.
+The **Omniscient Software Intelligence Suite** is a unified static analysis and software metrics platform built to handle enterprise-level repositories. Abstracting away language borders, it currently provides deep architectural insights into **Java** and **Python** codebases alongside Agile process tracking in a single, frictionless interface.
 
----
+It parses Abstract Syntax Trees (ASTs) on the fly to detect design flaws, calculate cyclomatic complexity, estimate effort, and measure technical debt—all without relying on heavy external JVMs or complex build pipelines.
 
-## ✨ Core Features
+## 🌟 Key Features
 
-| Feature                | Description                                                    |
-| :--------------------- | :------------------------------------------------------------- |
-| **AST Analysis**       | Static code analysis for Cyclomatic and Cognitive complexity.  |
-| **Agile Tracking**     | Automated Velocity and Scope Creep metrics from sprint data.   |
-| **Project Estimation** | COCOMO-based effort, duration, and staffing predictions.       |
-| **Refactoring Engine** | Logic-based recommendations for high-complexity modules.       |
-| **Visual Dashboard**   | Interactive Plotly-based visualizations for data distribution. |
+- **Omniscient Unified Engine**: A single control center handles multiple file types and languages simultaneously.
+- **Deep AST Analysis (Architecture & Smells)**: 
+  - Detects God Classes, Feature Envy, Long Methods, and Swiss Army Knife patterns.
+  - Verifies Naming Conventions and Javadoc coverage.
+- **Code Metrics (Complexity & Maintainability)**:
+  - Cyclomatic and Cognitive Complexity mapping.
+  - COCOMO Estimation and Defect Density prediction.
+  - Halstead Volume and raw Line-of-Code distributions.
+- **Agile Process Analytics**:
+  - Velocity Tracking, Scope Creep measurement, and Sprint Burndown visualization from raw JSON data.
+- **Zero-Coupling Architecture**: Completely modular backend design seamlessly integrated into a reactive Streamlit frontend.
 
----
+## 🚀 Live Deployment
 
-## 🏗️ Architecture & System Flow
+*Note: Streamlit apps run a Python backend, so while the code is hosted on GitHub, the live application should be deployed via Streamlit Community Cloud rather than static GitHub Pages.*
 
-### Internal Module Structure
+To deploy this project to the world for free:
+1. Push this repository to your public GitHub account.
+2. Go to [Streamlit Community Cloud](https://share.streamlit.io/).
+3. Click **New App**, select your GitHub repository, and set the main file path to `app.py`.
+4. Click **Deploy**. Your open-source tool is now live!
 
-The system is divided into a clean separation of UI and calculation logic.
+## 💻 Local Installation
 
-```mermaid
-graph TD
-    subgraph "Frontend Layer"
-        UI[app.py - Streamlit]
-    end
-
-    subgraph "Core Engine (src/)"
-        MC[metrics_calculator.py]
-        AST[AST Parser]
-        COCOMO[COCOMO Model]
-        Agile[Agile Processor]
-    end
-
-    subgraph "Data & Docs"
-        DATA[(data/)]
-        DOCS[docs/]
-    end
-
-    UI -->|Source Content| MC
-    MC -->|Parses| AST
-    MC -->|Calculates| COCOMO
-    MC -->|Analyzes| Agile
-    Agile <--> DATA
-    UI <--> DATA
-    UI -->|Visualizes| DOCS
-```
-
-### Data Processing Workflow
-
-How the system processes an uploaded Python file:
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Streamlit
-    participant Engine
-    participant AST
-
-    User->>Streamlit: Upload .py file
-    Streamlit->>Engine: analyze_python_file(content)
-    Engine->>AST: ast.parse()
-    AST-->>Engine: Tree structure
-    Engine->>Engine: Walk AST (Complexity calculation)
-    Engine-->>Streamlit: CodeMetrics object
-    Streamlit->>User: Display Dashboard & Visualizations
-```
-
----
-
-## 📂 Repository Structure
-
-```text
-Software-Metrics-Calculator/
-├── .github/               # CI/CD Workflows & Issue Templates
-├── src/                   # Core Logic
-│   ├── __init__.py
-│   └── metrics_calculator.py
-├── data/                  # Sample JSON/DB Datasets
-├── docs/                  # Architecture & Detailed Documentation
-├── tests/                 # Test Suite & Sample Data
-├── app.py                 # Streamlit Entry Point
-├── pyproject.toml         # Project Metadata & Deps
-└── requirements.txt       # Dependency List
-```
-
----
-
-## 🚀 Getting Started
-
-### Quick Start
+To run the suite locally, ensure you have Python 3.9+ installed.
 
 ```bash
-# Clone the repository
-git clone https://github.com/AhmadHassan-BTed/Software-Metrics-Calculator.git
+# 1. Clone the repository
+git clone https://github.com/yourusername/Omniscient-Quality-Suite.git
+cd Omniscient-Quality-Suite
 
-# Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+# 3. Launch the platform
 streamlit run app.py
 ```
 
-<details>
-<summary><b>🛠️ Advanced Installation (Virtual Env)</b></summary>
+## ⚙️ Configuration
 
-1. **Initialize Environment**
+The engine allows fine-grained control over strictness through the UI:
+- **Refactoring Recommendations**: Toggle dynamic improvement suggestions.
+- **Complexity Threshold**: Adjust the ceiling for acceptable method complexity (Default: 10).
+- **Detector Toggles**: Selectively enable/disable Design, Implementation, Naming, or Documentation checks to speed up processing or narrow focus.
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
-   ```
+## 👨‍💻 About the Author
 
-2. **Install with Dev Dependencies**
-   ```bash
-   pip install -e .
-   pip install pre-commit
-   pre-commit install
-   ```
-   </details>
-
----
-
-## ⚙️ Technical Pipeline
-
-The application processes data through three distinct pipelines:
-
-1. **Static Code Pipeline**: Uses the `ast` module to traverse the code structure without execution, identifying decision points and nesting levels.
-2. **Estimation Pipeline**: Implements the Basic COCOMO model to translate kLOC (thousand Lines of Code) into personnel requirements.
-3. **Agile Pipeline**: Aggregates sprint-level JSON data to track performance trends over time.
-
----
-
-## 🤝 Development & Contributing
-
-Contributions from the community are welcomed! The following steps should be followed:
-
-1. **Fork** the repository.
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`).
-3. **Commit** your changes (`git commit -m 'Add AmazingFeature'`).
-4. **Push** to the branch (`git push origin feature/AmazingFeature`).
-5. **Open** a Pull Request.
-
-Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
-
----
+**Ahmad Hassan (B-Ted)** is an Open-Source Software Engineer passionate about code quality, architectural integrity, and building robust tools that empower developers to write cleaner, more maintainable software.
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<div align="center">
-    <p>Built with ❤️ by Ahmad Hassan (B-Ted)</p>
-</div>
+This project is open-source and available under the [MIT License](LICENSE).

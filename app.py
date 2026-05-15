@@ -62,7 +62,7 @@ initialize_session_state()
 
 def render_unified_landing():
     st.markdown('<h1 class="main-header">🛡️ Omniscient Software Intelligence Suite</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle">Unified Code Quality, Architecture Metrics & Agile Process Analytics</p>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">Unified Code Quality, Architecture Metrics & Agile Process Analytics<br><i>An Open Source Project by Ahmad Hassan (B-Ted)</i></p>', unsafe_allow_html=True)
     
     st.markdown("### 🎯 Unified Capabilities")
     
@@ -188,6 +188,12 @@ def main():
         
         st.caption("🔧 Unified Platform v4.1")
         st.caption(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        st.markdown("---")
+        st.markdown(
+            "**Open Source Project**\n\n"
+            "Developed by **Ahmad Hassan (B-Ted)**\n\n"
+            "*(Software Engineer)*"
+        )
 
     # Separate files by extension
     python_files = [f for f in source_files if f.name.endswith('.py')] if source_files else []
