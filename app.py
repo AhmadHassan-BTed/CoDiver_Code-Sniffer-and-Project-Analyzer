@@ -168,15 +168,13 @@ def main():
         st.markdown("---")
         st.markdown("### ⚙️ Engine Configuration")
         
-        with st.expander("🐍 Python Analysis Settings", expanded=True):
-            show_recommendations = st.checkbox("Show Refactoring Recommendations", value=True)
+        with st.expander("Global Analysis Parameters", expanded=True):
+            show_recommendations = st.checkbox("Enable Refactoring Recommendations", value=True)
             complexity_threshold = st.slider("Complexity Warning Threshold", 5, 20, 10)
-            
-        with st.expander("☕ Java Analysis Settings", expanded=True):
-            enable_design = st.checkbox("Design Smells", value=True)
-            enable_implementation = st.checkbox("Implementation Smells", value=True)
-            enable_naming = st.checkbox("Naming Conventions", value=True)
-            enable_documentation = st.checkbox("Documentation", value=True)
+            enable_design = st.checkbox("Detect Design Smells", value=True)
+            enable_implementation = st.checkbox("Detect Implementation Smells", value=True)
+            enable_naming = st.checkbox("Check Naming Conventions", value=True)
+            enable_documentation = st.checkbox("Verify Documentation Coverage", value=True)
             
             java_config = {
                 'design': enable_design,
