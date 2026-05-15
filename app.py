@@ -80,8 +80,8 @@ def render_unified_landing():
     st.markdown("---")
     st.markdown("### 🔍 How to Use")
     st.markdown("""
-    1. **Upload Files:** Use the Control Center sidebar to upload any combination of Python files, Java files, or Agile JSON data.
-    2. **Configure Engines:** Adjust thresholds and toggle specific analyzers to tailor the strictness.
+    1. **Upload Files:** Use the Control Center sidebar to upload any combination of Python files, Java files, or Agile JSON data into the single Source Code uploader.
+    2. **Configure Engines:** Adjust thresholds and toggle specific analyzers (like Design Smells) to tailor the strictness.
     3. **Execute:** Click the "Execute Omniscient Analysis" button to process all uploaded artifacts simultaneously.
     4. **Review Results:** Navigate through the dynamically generated tabs to explore unified insights seamlessly.
     """)
@@ -157,9 +157,9 @@ def main():
     with st.sidebar:
         st.markdown("## 📂 Universal Control Center")
         
-        st.markdown("### Source Code")
-        python_files = st.file_uploader("Upload Python Files", type=['py'], accept_multiple_files=True)
-        java_file = st.file_uploader("Upload Java Source File", type=["java"])
+        st.markdown("### Source Code (Auto-Detect)")
+        # UNIFIED SINGLE UPLOADER FOR BOTH PYTHON AND JAVA
+        source_files = st.file_uploader("Upload Code Files (.py, .java)", type=['py', 'java'], accept_multiple_files=True)
         
         st.markdown("### Process Data")
         sprint_data = st.file_uploader("Upload Sprint Data (JSON)", type=['json'])
@@ -178,29 +178,28 @@ def main():
             enable_naming = st.checkbox("Naming Conventions", value=True)
             enable_documentation = st.checkbox("Documentation", value=True)
             
+            java_config = {
+                'design': enable_design,
+                'implementation': enable_implementation,
+                'naming': enable_naming,
+                'documentation': enable_documentation
+            }
+            
         st.markdown("---")
         analyze_btn = st.button("🚀 Execute Omniscient Analysis", type="primary", use_container_width=True)
         
-        st.caption("🔧 Unified Platform v4.0")
+        st.caption("🔧 Unified Platform v4.1")
         st.caption(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+
+    # Separate files by extension
+    python_files = [f for f in source_files if f.name.endswith('.py')] if source_files else []
+    java_files = [f for f in source_files if f.name.endswith('.java')] if source_files else []
 
     # Handle execute state
     if analyze_btn:
         st.session_state.omni_analyzed = True
 
-    # Handle Java File Session State
-    if java_file:
-        java_file.seek(0)
-        source_code = java_file.getvalue().decode("utf-8")
-        if st.session_state.file_name != java_file.name:
-            st.session_state.file_name = java_file.name
-            st.session_state.source_code = source_code
-            st.session_state.analysis_results = None
-            st.session_state.analysis_metrics = None
-            # Reset omni_analyzed if new file uploaded
-            st.session_state.omni_analyzed = False
-
-    has_content = bool(python_files or java_file or sprint_data)
+    has_content = bool(python_files or java_files or sprint_data)
 
     if not has_content:
         render_unified_landing()
@@ -209,7 +208,7 @@ def main():
         
         tab_names = []
         if python_files: tab_names.append("🐍 Python Metrics")
-        if java_file: tab_names.append("☕ Java Static Analysis")
+        if java_files: tab_names.append("☕ Java Static Analysis")
         if sprint_data: tab_names.append("🏃 Agile Analytics")
         
         if not tab_names:
@@ -226,15 +225,33 @@ def main():
                     st.info("Click 'Execute Omniscient Analysis' in the sidebar to process the Python files.")
             tab_idx += 1
             
-        if java_file:
+        if java_files:
             with tabs[tab_idx]:
-                render_java_file_info(java_file.name, len(st.session_state.source_code), len(st.session_state.source_code.split('\n')))
-                if analyze_btn:
-                    handle_java_analysis(st.session_state.source_code)
-                
-                if st.session_state.analysis_results is not None:
-                    display_java_results()
-                elif not st.session_state.get('omni_analyzed', False):
+                if st.session_state.get('omni_analyzed', False):
+                    # Process each Java file. If multiple, we show a selectbox to pick which one to view.
+                    if len(java_files) > 1:
+                        java_file_names = [f.name for f in java_files]
+                        selected_java = st.selectbox("Select Java File to view analysis:", java_file_names)
+                        active_java_file = next(f for f in java_files if f.name == selected_java)
+                    else:
+                        active_java_file = java_files[0]
+
+                    active_java_file.seek(0)
+                    source_code = active_java_file.getvalue().decode("utf-8")
+                    
+                    # Update session state for the Java Dashboard components
+                    st.session_state.file_name = active_java_file.name
+                    st.session_state.source_code = source_code
+                    
+                    # Render basic file info
+                    render_java_file_info(active_java_file.name, len(source_code), len(source_code.split('\n')))
+                    
+                    # Run analysis with the selected CONFIGURATIONS (passing java_config to respect user choices)
+                    handle_java_analysis(source_code, java_config)
+                    
+                    if st.session_state.analysis_results is not None:
+                        display_java_results()
+                else:
                     st.info("Click 'Execute Omniscient Analysis' in the sidebar to run the Java AST Engine.")
             tab_idx += 1
             
