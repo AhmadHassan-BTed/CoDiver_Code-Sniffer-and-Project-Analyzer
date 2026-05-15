@@ -9,6 +9,7 @@
 [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg?style=for-the-badge)](#)
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](#)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](#)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-🚀-blue?style=for-the-badge)](https://codiver.streamlit.app/)
 
 </div>
 
@@ -129,13 +130,19 @@ CoDiver/
 
 Because this application leverages a robust Python backend for intensive AST processing, it is deployed natively via containerized Python runtimes (and cannot be served statically via standard GitHub Pages).
 
-### Live Deployment (Streamlit Cloud)
-The most reliable deployment strategy for this architecture is via **Streamlit Community Cloud**:
+### 🌐 Live Demo
+The platform is currently live and operational on Streamlit Community Cloud.
 
-1. **Commit** the codebase to a public GitHub repository.
+**Access the live suite here:** [codiver.streamlit.app](https://codiver.streamlit.app/)
+
+### 🚀 Self-Hosting & Deployment
+Because this application leverages a robust Python backend for intensive AST processing, it is deployed natively via containerized Python runtimes.
+
+#### Deployment via Streamlit Cloud (Recommended)
+1. **Fork** this repository.
 2. Navigate to [Streamlit Share](https://share.streamlit.io/).
-3. Connect the repository and point the main file path to `app.py`.
-4. The cloud environment automatically parses `requirements.txt` and exposes the unified application globally.
+3. Connect your fork and point the main file path to `app.py`.
+4. The cloud environment will automatically parse `requirements.txt` and deploy your instance.
 
 ### Local Development Workflow
 To initialize the suite in a local development environment:
