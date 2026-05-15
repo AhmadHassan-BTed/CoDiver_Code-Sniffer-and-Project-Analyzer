@@ -17,7 +17,7 @@
 
 ## 📖 The Philosophy
 
-Software is inherently human. Behind every line of code, every architectural decision, and every sprint metric lies human effort and engineering intent. The **CoDiver: Code Sniffer & Project Analyzer** was built on the premise that technical debt shouldn't be an abstract concept—it should be deeply visible, understandable, and actionable.
+Software is inherently human. Behind every line of code, every architectural decision, and every sprint metric lies human effort and engineering intent. The **CoDiver: Code Sniffer & Project Analyzer** was built on the premise that technical debt shouldn't be an abstract concept - it should be deeply visible, understandable, and actionable.
 
 This platform bridges the gap between raw codebase complexity and human understanding. By unifying Python parsing, Java static analysis, and Agile process tracking into a single frictionless dashboard, the suite abstracts away the borders between languages and focuses purely on **the code**.
 
@@ -163,7 +163,7 @@ streamlit run app.py
 
 ## 🤝 Development & Contribution
 
-New ideas, architectural optimizations, and structural improvements are warmly welcomed. The system is designed to be highly extensible—adding support for a new language parser simply requires introducing a new module within `src/` and wiring it to the Universal Control Center in `app.py`.
+New ideas, architectural optimizations, and structural improvements are warmly welcomed. The system is designed to be highly extensible - adding support for a new language parser simply requires introducing a new module within `src/` and wiring it to the Universal Control Center in `app.py`.
 
 *When modifying the codebase, please ensure that UI concerns remain strictly separated from backend AST calculation logic.*
 
