@@ -1,72 +1,174 @@
+<div align="center">
+
 # 🛡️ Omniscient Software Intelligence Suite
 
-![Version](https://img.shields.io/badge/version-4.1-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)
+*An advanced, open-source unified platform for code quality, architecture metrics, and Agile analytics.*
 
-**An advanced, open-source unified code quality, architecture metrics, and Agile process analytics platform.**
+[![Version](https://img.shields.io/badge/version-4.1-blue.svg?style=for-the-badge)](#)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](#)
+[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg?style=for-the-badge)](#)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)](#)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](#)
 
-Developed and engineered by **Ahmad Hassan (B-Ted)**.
+</div>
 
 ---
 
-## 📖 Overview
+## 📖 The Philosophy
 
-The **Omniscient Software Intelligence Suite** is a unified static analysis and software metrics platform built to handle enterprise-level repositories. Abstracting away language borders, it currently provides deep architectural insights into **Java** and **Python** codebases alongside Agile process tracking in a single, frictionless interface.
+Software is inherently human. Behind every line of code, every architectural decision, and every sprint metric lies human effort and engineering intent. The **Omniscient Software Intelligence Suite** was built on the premise that technical debt shouldn't be an abstract concept—it should be deeply visible, understandable, and actionable.
 
-It parses Abstract Syntax Trees (ASTs) on the fly to detect design flaws, calculate cyclomatic complexity, estimate effort, and measure technical debt—all without relying on heavy external JVMs or complex build pipelines.
+This platform bridges the gap between raw codebase complexity and human understanding. By unifying Python parsing, Java static analysis, and Agile process tracking into a single frictionless dashboard, the suite abstracts away the borders between languages and focuses purely on **the code**.
 
-## 🌟 Key Features
+---
 
-- **Omniscient Unified Engine**: A single control center handles multiple file types and languages simultaneously.
-- **Deep AST Analysis (Architecture & Smells)**: 
-  - Detects God Classes, Feature Envy, Long Methods, and Swiss Army Knife patterns.
-  - Verifies Naming Conventions and Javadoc coverage.
-- **Code Metrics (Complexity & Maintainability)**:
-  - Cyclomatic and Cognitive Complexity mapping.
-  - COCOMO Estimation and Defect Density prediction.
-  - Halstead Volume and raw Line-of-Code distributions.
-- **Agile Process Analytics**:
-  - Velocity Tracking, Scope Creep measurement, and Sprint Burndown visualization from raw JSON data.
-- **Zero-Coupling Architecture**: Completely modular backend design seamlessly integrated into a reactive Streamlit frontend.
+## 🏗️ Architecture Overview
 
-## 🚀 Live Deployment
+The platform operates on a **Zero-Coupling, Event-Reactive Architecture**. The frontend strictly delegates analysis to isolated backend engines, which parse raw files into Abstract Syntax Trees (ASTs) on the fly.
 
-*Note: Streamlit apps run a Python backend, so while the code is hosted on GitHub, the live application should be deployed via Streamlit Community Cloud rather than static GitHub Pages.*
+```mermaid
+graph TD
+    classDef frontend fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff;
+    classDef controller fill:#475569,stroke:#94a3b8,stroke-width:2px,color:#fff;
+    classDef engine fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#fff;
+    
+    UI[🖥️ Streamlit Frontend]:::frontend -->|Unified File Upload| Controller[⚙️ Universal Control Center]:::controller
+    
+    Controller -->|Routes .py| PythonEngine[🐍 Python AST Engine]:::engine
+    Controller -->|Routes .java| JavaEngine[☕ Java AST Engine]:::engine
+    Controller -->|Routes .json| AgileEngine[🏃 Agile Process Engine]:::engine
+    
+    subgraph Core Analyzers
+        PythonEngine --> PyMetrics[Complexity & Code Metrics]
+        JavaEngine --> JavaSmells[Design & Implementation Smells]
+        AgileEngine --> SprintMetrics[Velocity & Scope Creep]
+    end
+    
+    PyMetrics --> Aggregator[📊 Results Aggregator]
+    JavaSmells --> Aggregator
+    SprintMetrics --> Aggregator
+    
+    Aggregator -->|Pandas DataFrames| UI
+```
 
-To deploy this project to the world for free:
-1. Push this repository to your public GitHub account.
-2. Go to [Streamlit Community Cloud](https://share.streamlit.io/).
-3. Click **New App**, select your GitHub repository, and set the main file path to `app.py`.
-4. Click **Deploy**. Your open-source tool is now live!
+---
 
-## 💻 Local Installation
+## ⚙️ Request Lifecycle & Data Flow
 
-To run the suite locally, ensure you have Python 3.9+ installed.
+Data flows deterministically from the browser, through the AST generators, into Pandas dataframes, and back out to Plotly visuals. The UI remains fully stateless until explicitly commanded to execute an analysis.
+
+```mermaid
+sequenceDiagram
+    participant User as Developer
+    participant UI as 🖥️ UI (app.py)
+    participant Engine as ⚙️ Analyzer Engine
+    participant State as 💾 Session State
+    
+    User->>UI: Uploads Source Code (.py, .java)
+    UI->>UI: Auto-categorize by extension
+    User->>UI: Adjusts Global Parameters
+    User->>UI: Executes Omniscient Analysis
+    
+    UI->>Engine: Dispatches raw UTF-8 strings & configs
+    
+    rect rgb(30, 41, 59)
+        Note right of Engine: Backend Processing Phase
+        Engine->>Engine: Generate Abstract Syntax Trees
+        Engine->>Engine: Traverse classes, fields, methods
+        Engine->>Engine: Evaluate Code Smells & Constraints
+    end
+    
+    Engine-->>State: Yield structured dictionaries
+    State->>State: Transform to Pandas DataFrames
+    State-->>UI: Triggers reactive re-render
+    
+    UI-->>User: Displays interactive visualizations
+```
+
+---
+
+## 🧩 Internal Module Structure
+
+The repository enforces a strict separation between UI logic and calculation algorithms to guarantee high cohesion and maintainability at scale.
+
+<details>
+<summary><b>📂 Click to expand the Project Tree</b></summary>
+
+```text
+Omniscient-Quality-Suite/
+├── app.py                      # Master Unified Controller & UI Entry Point
+├── requirements.txt            # Dependency configuration
+└── src/
+    ├── java_analyzer/          # Java Static Analysis Subsystem
+    │   ├── analyzer_engine.py  # javalang AST traversal logic
+    │   ├── dashboard.py        # Session state & execution handlers
+    │   ├── detectors/          # Code Smell logic (Design, Naming, etc.)
+    │   └── utils/              # UI components & helpers
+    │
+    └── software_metrics/       # Python & Agile Analytics Subsystem
+        ├── calculators/        # Core calculation algorithms (COCOMO, Agile)
+        ├── ui/                 # Visualization components (Charts, Cards)
+        └── tests/              # Subsystem validation
+```
+</details>
+
+---
+
+## ✨ System Capabilities
+
+| Subsystem | Core Responsibilities | Underlying Tech |
+| :--- | :--- | :--- |
+| **Code Metrics** | AST generation, Cyclomatic & Cognitive complexity mapping, Defect density prediction, COCOMO estimation. | `ast`, `radon` |
+| **Static Architecture** | God Class detection, Feature Envy identification, naming conventions, Javadoc validation, raw LOC distributions. | `javalang` |
+| **Agile Process** | Velocity tracking, sprint burndown visualization, scope creep calculation. | `pandas`, `plotly` |
+| **Universal Control** | Unified drag-and-drop ingestion, cross-language processing dispatch, dynamic parameter routing. | `streamlit` |
+
+---
+
+## 🚀 Build & Deployment Pipeline
+
+Because this application leverages a robust Python backend for intensive AST processing, it is deployed natively via containerized Python runtimes (and cannot be served statically via standard GitHub Pages).
+
+### Live Deployment (Streamlit Cloud)
+The most reliable deployment strategy for this architecture is via **Streamlit Community Cloud**:
+
+1. **Commit** the codebase to a public GitHub repository.
+2. Navigate to [Streamlit Share](https://share.streamlit.io/).
+3. Connect the repository and point the main file path to `app.py`.
+4. The cloud environment automatically parses `requirements.txt` and exposes the unified application globally.
+
+### Local Development Workflow
+To initialize the suite in a local development environment:
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/yourusername/Omniscient-Quality-Suite.git
 cd Omniscient-Quality-Suite
 
-# 2. Install dependencies
+# 2. Install AST parsers and UI dependencies
 pip install -r requirements.txt
 
-# 3. Launch the platform
+# 3. Boot the reactive frontend server
 streamlit run app.py
 ```
 
-## ⚙️ Configuration
+---
 
-The engine allows fine-grained control over strictness through the UI:
-- **Refactoring Recommendations**: Toggle dynamic improvement suggestions.
-- **Complexity Threshold**: Adjust the ceiling for acceptable method complexity (Default: 10).
-- **Detector Toggles**: Selectively enable/disable Design, Implementation, Naming, or Documentation checks to speed up processing or narrow focus.
+## 🤝 Development & Contribution
 
-## 👨‍💻 About the Author
+New ideas, architectural optimizations, and structural improvements are warmly welcomed. The system is designed to be highly extensible—adding support for a new language parser simply requires introducing a new module within `src/` and wiring it to the Universal Control Center in `app.py`.
 
-**Ahmad Hassan (B-Ted)** is an Open-Source Software Engineer passionate about code quality, architectural integrity, and building robust tools that empower developers to write cleaner, more maintainable software.
+*When modifying the codebase, please ensure that UI concerns remain strictly separated from backend AST calculation logic.*
+
+---
+
+## 👨‍💻 Engineering Credits
+
+**Ahmad Hassan (B-Ted)**  
+*Software Engineer*
+
+This architecture was designed and engineered from the ground up to solve complex software quality tracking constraints using modern, event-driven Python web paradigms. 
 
 ## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This repository is published under the [MIT License](LICENSE), promoting open knowledge and collaborative engineering.
