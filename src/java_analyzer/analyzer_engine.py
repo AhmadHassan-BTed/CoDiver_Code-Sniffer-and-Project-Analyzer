@@ -18,30 +18,41 @@ class StaticAnalyzerEngine:
     and calculates comprehensive code metrics.
     """
     
-    def __init__(self, code: str):
+    def __init__(self, code: str, config: Dict[str, bool] = None):
         """
         Initialize the analyzer engine.
         
         Args:
             code: Java source code as a string
+            config: Dictionary specifying which detectors to enable
         """
         self.code = code
         self.lines = code.split('\n')
+        self.config = config or {
+            'design': True,
+            'implementation': True,
+            'naming': True,
+            'documentation': True
+        }
         self.detectors: List[CodeSmell] = self._initialize_detectors()
     
     def _initialize_detectors(self) -> List[CodeSmell]:
         """
-        Initialize all detector instances.
+        Initialize all detector instances based on configuration.
         
         Returns:
             List of code smell detector instances
         """
-        return [
-            DesignSmells(),
-            ImplementationSmells(),
-            NamingSmells(),
-            DocumentationSmells()
-        ]
+        detectors = []
+        if self.config.get('design', True):
+            detectors.append(DesignSmells())
+        if self.config.get('implementation', True):
+            detectors.append(ImplementationSmells())
+        if self.config.get('naming', True):
+            detectors.append(NamingSmells())
+        if self.config.get('documentation', True):
+            detectors.append(DocumentationSmells())
+        return detectors
     
     def run(self) -> Tuple[List[Dict[str, Any]], javalang.tree.CompilationUnit]:
         """

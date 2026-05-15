@@ -152,14 +152,15 @@ def render_file_info(file_name: str, file_size: int, line_count: int):
         st.info(f"📏 **Lines:** {line_count}")
 
 
-def handle_analysis(source_code: str):
+def handle_analysis(source_code: str, config: dict = None):
     """
     Handle the analysis execution and error handling.
     
     Args:
         source_code: Java source code to analyze
+        config: Analysis configuration dictionary
     """
-    engine = StaticAnalyzerEngine(source_code)
+    engine = StaticAnalyzerEngine(source_code, config)
     
     try:
         with st.spinner("🔄 Parsing AST nodes and executing analyzers..."):
